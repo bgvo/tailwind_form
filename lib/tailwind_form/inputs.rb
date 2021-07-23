@@ -8,5 +8,7 @@ module TailwindForm
     autoload :EmailField
     autoload :TextArea
     autoload :TextField
+    autoload :TimeZoneSelect
+
   end
 end

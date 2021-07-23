@@ -9,6 +9,7 @@ module TailwindForm
     include TailwindForm::Inputs::EmailField
     include TailwindForm::Inputs::TextArea
     include TailwindForm::Inputs::TextField
+    include TailwindForm::Inputs::TimeZoneSelect
 
     delegate :concat, :tag, to: :@template
   end
