@@ -8,7 +8,7 @@ module TailwindForm
       private
 
         def tailwind_label_field(name)
-          field_options = { class: 'form__label' }
+          field_options = { class: TailwindForm.configuration.form_label_classes }
           label(name, field_options)
         end
     end

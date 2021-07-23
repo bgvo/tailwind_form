@@ -6,10 +6,12 @@ module TailwindForm
       extend ActiveSupport::Concern
 
       class_methods do
-        def tailwind_field(field_name)
-          define_method "#{field_name}_with_tailwind" do |name, options = {}|
-            @template.content_tag :div, class: 'form__inputGroup' do
-              send(field_name, name, options)
+        def tailwind_field(field_name, &block)
+            define_method "#{field_name}_with_tailwind" do |*args, &block|
+            @template.content_tag :div, class: TailwindForm.configuration.form_input_group_classes do
+              name = args[0]
+              options = args[1..-1]
+              send(field_name, name, *options, &block)
             end
           end
         end
