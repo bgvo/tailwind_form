@@ -1,6 +1,9 @@
+## Aknowledgments
+This gem is based on the previos work done in https://github.com/maxmetcalf12/tailwind_form, which bases elements' class customization on PostCSS. Depending on the [configuration](#configuration) you have in your Rails app, it can be tricky to have PostCSS plugins work, which in turn are needed for the origina approach to work. 
 # TailwindForm
+`tailwind_form` is a Rails form builder to easily implement custom, consistent TailwindCSS forms into your Rails app. 
 
-`tailwind_form` is a Rails form builder to easily implement custom, consistent TailwindCSS forms into your Rails app. It provides forms with preset `form__group`, `form__label`, `form__inputGroup`, and `form__input` css classes that you customize using Tailwind classes and `@apply` tag in SCSS.
+This gem sets common form elements' classes with a simple configuration file. 
 
 This gem is assuming you have [TailwindCSS](https://github.com/tailwindcss/tailwindcss) and [TailwindCSS Custom Forms](https://github.com/tailwindcss/custom-forms) already installed on your rails application.
 
@@ -14,16 +17,16 @@ This gem is largely based on the [Bootstrap Form Gem](https://github.com/bootstr
 
 ## Requirements
 
-Currently, `tailwind_form` is only tested with
-* Rails 6.0.1
-* Tailwind 1.4.6
+Tested with:
+* Rails 6.1.3.1
+* Tailwind 2.0.4
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tailwind_form'
+gem 'tailwind_form', git: 'https://github.com/bgvo/tailwind_form'
 ```
 
 And then execute:
@@ -33,31 +36,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install tailwind_form
-
-Our gem depends on having preset form classes set in your local scss directory.
-A sample implementation is as follows:
-
-```scss
-.form__group {
-  @apply my-2;
-}
-
-.form__label {
-  @apply block text-sm font-medium text-gray-700;
-}
-
-.form__inputGroup {
-  @apply mt-1 rounded-md shadow-sm;
-}
-
-.form__input {
-  @apply form-input block w-full;
-
-  @screen sm {
-    @apply text-sm leading-tight;
-  }
-}
-```
 
 ## Usage
 
@@ -81,22 +59,22 @@ Which generates the following form:
 ```html
 <form action="/people" accept-charset="UTF-8" method="post">
   <input type="hidden" name="authenticity_token" value="cfuds;" />
-  <div class="form__group">
-    <label class="form__label" for="person_first_name">First name</label>
-    <div class="form__inputGroup">
-      <input class="form__input" type="text" name="person[first_name]" id="person_first_name" />
+  <div class="form-group-class-1 form-group-class-2">
+    <label class="form-label-class-1 form-label-class-2" for="person_first_name">First name</label>
+    <div class="form-input-group-class-1">
+      <input type="text" name="person[first_name]" id="person_first_name" />
     </div>
   </div>
-  <div class="form__group">
-    <label class="form__label" for="person_last_name">Last name</label>
-    <div class="form__inputGroup">
-      <input class="form__input" type="text" name="person[last_name]" id="person_last_name" />
+  <div class="form-group-class-1 form-group-class-2">
+    <label class="form-label-class-1 form-label-class-2" for="person_last_name">Last name</label>
+    <div class="form-input-group-class-1">
+      <input type="text" name="person[last_name]" id="person_last_name" />
     </div>
   </div>
-  <div class="form__group">
-    <label class="form__label" for="person_email">Email</label>
-    <div class="form__inputGroup">
-      <input class="form__input" type="email" name="person[email]" id="person_email" />
+  <div class="form-group-class-1 form-group-class-2">
+    <label class="form-label-class-1 form-label-class-2" for="person_email">Email</label>
+    <div class="form-input-group-class-1">
+      <input type="email" name="person[email]" id="person_email" />
     </div>
   </div>
 
@@ -104,6 +82,18 @@ Which generates the following form:
     <input type="submit" name="commit" value="Create Person" data-disable-with="Create Person" />
   </div>
 </form>
+```
+
+## Configuration
+
+Add `tailwind_form.rb` to `config/initializers`:
+
+```ruby
+TailwindForm.configure do |config|
+  config.form_label_classes = "form-label-class-1 form-label-class-2"
+  config.form_group_classes = "form-group-class-1 form-group-class-2"
+  config.form_input_group_classes = "form-input-group-class-1 form-input-group-class-2"
+end
 ```
 
 ## Development
@@ -116,9 +106,10 @@ To release a new version, update the version number in `version.rb`, and then ru
 
 ## To do
 
-So far, we have implemented the basic form but only have `text_field`, `text_area`, and `email_field`. Next steps are implementing all of the other input types.
+So far, we have implemented the basic form but only have `text_field`, `text_area`, `email_field` and `time_zone_select`. Next steps are implementing all of the other input types.
 
 Additionally, here are other items on the todo list:
+* Add class configuration support for different form elements: text fields, checkboxes, radio buttons, etc.
 * Add support for errors, both as an alert and as inline error helper
 * Add different layout options
 * Add different options for select and multiselect using AlpineJS
@@ -127,7 +118,7 @@ If anyone happens to be seeing/using this gem and can think of other features, p
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/maxmetcalf12/tailwind_form. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/maxmetcalf12/tailwind_form/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/bgvo/tailwind_form. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/maxmetcalf12/tailwind_form/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
